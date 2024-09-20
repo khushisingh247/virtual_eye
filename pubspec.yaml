@@ -41,6 +41,10 @@ dependencies:
   url_launcher: ^6.2.1
   google_maps_flutter: ^2.9.0
   custom_info_window: ^1.0.1
+  tflite_v2: ^1.0.0   # TensorFlow Lite package for model inference
+  camera: ^0.11.0+2
+  flutter_tts: ^3.5.2
+
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +65,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

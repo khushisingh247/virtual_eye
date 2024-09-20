@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_page/Widget/button.dart';
+import 'package:camera/camera.dart';
+import 'package:login_page/object_detection/realtime_object_detection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -18,15 +20,32 @@ class MapUtils {
 }
 
 class HomeScreenBottom extends StatefulWidget {
-  const HomeScreenBottom({super.key});
+
+  const HomeScreenBottom({super.key, required cameras});
 
   @override
   State<HomeScreenBottom> createState() => _HomeScreenBottomState();
 }
 
 class _HomeScreenBottomState extends State<HomeScreenBottom> {
+  List<CameraDescription>? cameras;
+  @override
+  void initState() {
+    super.initState();
+    initializeCameras();
+  }
+
+  Future<void> initializeCameras() async {
+    cameras = await availableCameras();
+    setState(() {});
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    if (cameras == null) {
+      return Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -46,8 +65,8 @@ class _HomeScreenBottomState extends State<HomeScreenBottom> {
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             MyButtons(
-              onTap: () async {
-                await MapUtils.openMap(25.31668000,83.01041000 );
+              onTap: ()  {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>RealTimeObjectDetection(cameras: cameras!)));
               },
 
               text: "Object Detection",
