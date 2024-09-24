@@ -51,6 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _openYouTubeMusic() async {
+    final Uri url = Uri.parse('https://music.youtube.com/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context) => const LoginPage(),
                 ),
               );
-            } else {
+            }else if (index == 2) {
+              // Community tab is selected, open YouTube Music
+              _openYouTubeMusic();
+            }
+            else {
               // Update the selected index
               myIndex = index;
             }
