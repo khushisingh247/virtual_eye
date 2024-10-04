@@ -19,13 +19,15 @@ class _ServicesBottomState extends State<ServicesBottom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Color(0xFF373856),
       appBar: AppBar(
         title: const Text(
           'Services',
+          //backgroundColor: Color(0xFF373856),
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color(0xFF404165),
       ),
       body: ListView.builder(
         itemCount: contacts.length,

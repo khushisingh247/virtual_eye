@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+//import 'package:login_page/home_Page_flutter/homedemo.dart';
 import 'package:login_page/home_Page_flutter/homepage.dart';
 import 'package:login_page/login_signup/login_page.dart';
 
@@ -19,13 +20,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
-      //home:  const HomeScreen(),
+      //home: const Homedemo(),
+      //home: const LoginPage(),
+      home:  const HomeScreen(),
     );
   }
 }
