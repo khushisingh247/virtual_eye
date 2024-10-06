@@ -44,7 +44,8 @@ dependencies:
   tflite_v2: ^1.0.0   # TensorFlow Lite package for model inference
   camera: ^0.11.0+2
   flutter_tts: ^3.5.2
-
+  speech_to_text: ^6.6.2
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:
