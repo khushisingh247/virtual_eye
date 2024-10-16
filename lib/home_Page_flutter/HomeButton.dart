@@ -25,10 +25,10 @@ class CatigoryW extends StatelessWidget {
           //color: Colors.orangeAccent,
           //color: const Color(0xFFFABF75),
           //color: const Color(0xFFEAB777),
-            color: Color(0xFF494C8A),
-          boxShadow: [
+            color: const Color(0xFF494C8A),
+          boxShadow: const [
             BoxShadow(
-              color: const Color(0xFF00000B),
+              color: Color(0xFF00000B),
               blurRadius: 15,
             ),
 
