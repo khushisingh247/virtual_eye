@@ -3,12 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'package:login_page/home_Page_flutter/homedemo.dart';
 import 'package:login_page/home_Page_flutter/homepage.dart';
 import 'package:login_page/login_signup/login_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(), // Your main app widget
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:login_page/home_Page_flutter/home_screen_bottom.dart';
 import 'package:login_page/home_Page_flutter/services_bottom.dart';
 import 'package:login_page/login_signup/login_page.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:permission_handler/permission_handler.dart';  // For handling permissions
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Widget/button.dart';
 import 'package:camera/camera.dart';
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         myIndex = 0;  // Navigate to "Home"
       });
-    } else if (command.contains('open community')) {
+    } else if (command.contains('open music')) {
       _openYouTubeMusic(); // Navigate to "Community"
     } else if (command.contains('log out')) {
       _showLogoutConfirmationDialog();
@@ -124,6 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else if (command.contains('open map')) {
       MapUtils.openMap(25.31668000, 83.01041000);
+    }
+    else if (command.contains('logout')) {
+      _showLogoutConfirmationDialog();
     }
   }
 
@@ -213,8 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'Services',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.group),
-              label: 'Community',
+              icon: Icon(Icons.queue_music),
+              label: 'Music',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.logout),

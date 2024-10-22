@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       voiceFingerprintAuth.startListening((String recognizedWords) async {
         if (recognizedWords.toLowerCase().contains('fingerprint')) {
           voiceFingerprintAuth.stopListening(); // Stop listening once the command is recognized
-          await voiceFingerprintAuth.speak("Apply your fingerprint"); // Announce when to apply fingerprint
+          //await voiceFingerprintAuth.speak("Apply your fingerprint"); // Announce when to apply fingerprint
           bool isAuthenticated = await voiceFingerprintAuth.authenticate(context);
           if (isAuthenticated) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(

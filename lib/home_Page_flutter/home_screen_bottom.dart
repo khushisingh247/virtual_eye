@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:login_page/chatbot/chat_home.dart';
 import 'package:login_page/home_Page_flutter/HomeButton.dart';
 import 'package:login_page/object_detection/realtime_object_detection.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -140,7 +141,14 @@ class HomeScreenBottom extends StatelessWidget {
                                     image: 'images/chatbot.png',
                                     text: 'Chatbot',
                                     color: Colors.white,
-                                    onPressed: _openGoogleVoiceSearch,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatHome(),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
