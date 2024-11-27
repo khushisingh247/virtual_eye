@@ -36,7 +36,8 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
   // Method to play the opening instruction in both English and Hindi
   Future<void> _playOpeningInstruction() async {
     // Play the English instruction
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("en-IN");
+    await Future.delayed(Duration(milliseconds: 250));
     await flutterTts.speak("Hold the screen to ask a question.");
 
     // Wait for the English instruction to finish before speaking in Hindi
@@ -51,7 +52,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
 
   // Method to provide auditory feedback when recording starts
   Future<void> _playStartRecordingSound() async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("en-IN");
     await flutterTts.speak("Listening...");
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.setLanguage("hi-IN");
@@ -60,7 +61,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
 
   // Method to provide auditory feedback when recording stops
   Future<void> _playStopRecordingSound() async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("en-IN");
     await flutterTts.speak("Recording stopped.");
   }
 
@@ -88,7 +89,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
       await flutterTts.setLanguage("hi-IN");
     } else {
       // Assuming other messages are in English
-      await flutterTts.setLanguage("en-US");
+      await flutterTts.setLanguage("en-IN");
     }
   }
 

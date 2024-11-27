@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:login_page/chatbot/chat_home.dart';
 import 'package:login_page/home_Page_flutter/HomeButton.dart';
+import 'package:login_page/home_Page_flutter/services_bottom.dart';
 import 'package:login_page/object_detection/realtime_object_detection.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class MapUtils {
   MapUtils._();
@@ -19,7 +21,7 @@ class MapUtils {
   }
 }
 
-class HomeScreenBottom extends StatelessWidget {
+class HomeScreenBottom extends StatefulWidget {
   final List<CameraDescription>? cameras;
   final VoidCallback startListening;
   final VoidCallback stopListening;
@@ -31,30 +33,45 @@ class HomeScreenBottom extends StatelessWidget {
     required this.stopListening,
   }) : super(key: key);
 
-  Future<void> _openGoogleVoiceSearch() async {
-    const String url = 'https://www.google.com/voice';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw 'Could not launch $url';
+  @override
+  _HomeScreenBottomState createState() => _HomeScreenBottomState();
+}
+
+class _HomeScreenBottomState extends State<HomeScreenBottom> {
+  final FlutterTts _flutterTts = FlutterTts();
+
+  @override
+  void initState() {
+    super.initState();
+    _playWelcomeMessage();
+  }
+
+  Future<void> _playWelcomeMessage() async {
+    try {
+      await _flutterTts.setLanguage("en-IN");
+      await _flutterTts.speak("Welcome to our app. Tap anywhere to give a command. You have to say 'open' before the option of object detection, chatbot, map, services, music, logout. example open chatbot.");
+      await _flutterTts.awaitSpeakCompletion(true);
+      await _flutterTts.setLanguage("hi-IN");
+      await _flutterTts.speak(" Hamare app mein aapka swagat hai.Command dene ke liye kahin bhi click karein. Aapko object detection, chatbot, map, services, music, aur logout jaise vikalpo ke istemal karne ke liye pehle 'open' bole . jaise ki ' open chatbot'");
+    } catch (e) {
+      print("Error playing welcome message: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (cameras == null) {
+    if (widget.cameras == null) {
       return const Center(child: CircularProgressIndicator());
     }
+
     return GestureDetector(
       onTap: () {
-        // When user taps anywhere on the screen, start or stop listening
-        stopListening();
-        startListening();
+        widget.stopListening();
+        widget.startListening();
       },
       child: Scaffold(
         backgroundColor: Colors.white38,
         body: SingleChildScrollView(
-          // This makes the page scrollable
           child: Column(
             children: [
               Stack(
@@ -73,7 +90,6 @@ class HomeScreenBottom extends StatelessWidget {
                           colors: [
                             Color(0xffFD8BAB),
                             Color(0xFF28265B),
-
                           ],
                         ),
                       ),
@@ -96,12 +112,10 @@ class HomeScreenBottom extends StatelessWidget {
                         const Text(
                           'Click anywhere to give user Command like "open object detection","open map"',
                           style: TextStyle(
-                            color: Colors.white, // Text color
-                            fontSize: 16, // Text size
+                            color: Colors.white,
+                            fontSize: 16,
                           ),
                         ),
-
-
                         Padding(
                           padding: const EdgeInsets.only(top: 60),
                           child: Column(
@@ -113,12 +127,12 @@ class HomeScreenBottom extends StatelessWidget {
                                     image: 'images/object.jpg',
                                     text: 'Object Detection',
                                     color: Colors.white,
-                                    onPressed: () {
+                                    onDoubleTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              RealTimeObjectDetection(cameras: cameras!),
+                                              RealTimeObjectDetection(cameras: widget.cameras!),
                                         ),
                                       );
                                     },
@@ -127,7 +141,7 @@ class HomeScreenBottom extends StatelessWidget {
                                     image: 'images/map-locator.png',
                                     text: ' Map',
                                     color: Colors.white,
-                                    onPressed: () async {
+                                    onDoubleTap: () async {
                                       await MapUtils.openMap(25.31668000, 83.01041000);
                                     },
                                   ),
@@ -141,7 +155,7 @@ class HomeScreenBottom extends StatelessWidget {
                                     image: 'images/chatbot.png',
                                     text: 'Chatbot',
                                     color: Colors.white,
-                                    onPressed: () {
+                                    onDoubleTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -150,12 +164,12 @@ class HomeScreenBottom extends StatelessWidget {
                                       );
                                     },
                                   ),
+
                                 ],
                               ),
                             ],
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -168,4 +182,3 @@ class HomeScreenBottom extends StatelessWidget {
     );
   }
 }
-

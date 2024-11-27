@@ -11,7 +11,7 @@ class VoiceFingerprintAuth {
   bool isListening = false;
 
   Future<void> speak(String text) async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("en-IN");
     await flutterTts.setPitch(1.0);
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.speak(text);

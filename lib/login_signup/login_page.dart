@@ -46,21 +46,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  // Method to trigger voice command and fingerprint authentication
-  // void loginWithVoiceAndFingerprint() async {
-  //   // Start listening for the "fingerprint" command
-  //   voiceFingerprintAuth.startListening((String recognizedWords) async {
-  //     if (recognizedWords.toLowerCase().contains('fingerprint')) {
-  //       voiceFingerprintAuth.stopListening(); // Stop listening once the command is recognized
-  //       await voiceFingerprintAuth.speak("Apply your fingerprint"); // Announce when to apply fingerprint
-  //       bool isAuthenticated = await voiceFingerprintAuth.authenticate(context);
-  //       if (isAuthenticated) {
-  //         Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //           builder: (context) => const HomeScreen(),
-  //         ));
-  //       }
-  //     }
-  //   });
 
   void loginWithVoiceAndFingerprint() async {
     try {
@@ -128,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  MyButtons(onTap: loginUser, text: "Log In"),
+                  MyButtons(onDoubleTap: loginUser, text: "Log In"),
 
                   SizedBox(height: height / 15),
                   Row(
@@ -136,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       const Text("Don't have an account?", style: TextStyle(fontSize: 16)),
                       GestureDetector(
-                        onTap: () {
+                        onDoubleTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(

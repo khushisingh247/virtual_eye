@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/chatbot/chat_home.dart';
 import 'package:login_page/home_Page_flutter/home_screen_bottom.dart';
 import 'package:login_page/home_Page_flutter/services_bottom.dart';
 import 'package:login_page/login_signup/login_page.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Widget/button.dart';
 import 'package:camera/camera.dart';
-
 import '../object_detection/realtime_object_detection.dart';
 
 class MapUtils {
@@ -24,6 +24,10 @@ class MapUtils {
   }
 }
 
+
+
+
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -36,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<CameraDescription>? cameras;
   List<Widget> widgetList = [];
   stt.SpeechToText _speechToText = stt.SpeechToText();  // Single instance for SpeechToText
+  final FlutterTts flutterTts = FlutterTts();
   bool _isListening = false;
   String _command = '';
 
@@ -125,6 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (command.contains('open map')) {
       MapUtils.openMap(25.31668000, 83.01041000);
     }
+    else if (command.contains('open chatbot')) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatHome(),
+        ),
+      );
+    }
     else if (command.contains('logout')) {
       _showLogoutConfirmationDialog();
     }
@@ -170,6 +183,16 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+  Future<void> _playListeningInstruction() async {
+      await flutterTts.setLanguage("en-IN");
+      await flutterTts.speak("Listening...");
+      await flutterTts.awaitSpeakCompletion(true);
+
+      // Play "Bole" in Hindi
+      await flutterTts.setLanguage("hi-IN");
+      await flutterTts.speak("Bole");
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (_isListening) {
           _stopListening();
         } else {
+          _playListeningInstruction();
           _startListening();
         }
       },
@@ -194,17 +218,6 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: const Color(0xFF404165),
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          onTap: (index) {
-            setState(() {
-              if (index == 3) {
-                _showLogoutConfirmationDialog();
-              } else if (index == 2) {
-                _openYouTubeMusic;
-              } else {
-                myIndex = index;
-              }
-            });
-          },
           currentIndex: myIndex,
           items: const [
             BottomNavigationBarItem(
@@ -230,4 +243,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 

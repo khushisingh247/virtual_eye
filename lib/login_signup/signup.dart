@@ -82,14 +82,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
             
             
-                  MyButtons(onTap: signUpUser, text: "Sign Up"),
+                  MyButtons(onDoubleTap: signUpUser, text: "Sign Up"),
                   SizedBox(height: height/15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Already have an account? ",style: TextStyle(fontSize: 16),),
                       GestureDetector(
-                        onTap:(){
+                        onDoubleTap:(){
                           Navigator.push(context,
                             MaterialPageRoute(builder: (context)=>const LoginPage(),
                             ),

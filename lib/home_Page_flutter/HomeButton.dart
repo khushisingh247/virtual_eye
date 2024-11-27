@@ -4,44 +4,36 @@ class CatigoryW extends StatelessWidget {
   final String image;
   final String text;
   final Color color;
-  final VoidCallback onPressed; // Add a callback for button-like behavior
+  final VoidCallback onDoubleTap; // Callback for double tap
 
-  CatigoryW({
+  const CatigoryW({
+    Key? key,
     required this.image,
     required this.text,
     required this.color,
-    required this.onPressed, // Make it required for button action
-  });
+    required this.onDoubleTap, // Make it required for double tap action
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed, // Add onTap event here to trigger the action
+      onDoubleTap: onDoubleTap, // Trigger the double tap action
       child: Container(
         height: 200,
         width: 160,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          //color: Colors.orangeAccent,
-          //color: const Color(0xFFFABF75),
-          //color: const Color(0xFFEAB777),
-            color: const Color(0xFF494C8A),
+          color: const Color(0xFF494C8A),
           boxShadow: const [
             BoxShadow(
               color: Color(0xFF00000B),
               blurRadius: 15,
             ),
-
-
-          ]
+          ],
         ),
         child: Column(
-
           children: [
-
-            const SizedBox(
-              height: 20, // Adjust the height as needed
-            ),
+            const SizedBox(height: 20), // Adjust the height as needed
             ClipOval(
               child: Image.asset(
                 image,
@@ -50,9 +42,7 @@ class CatigoryW extends StatelessWidget {
                 fit: BoxFit.cover, // Ensures the image fits within the circular area
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
               text,
               style: TextStyle(color: color, fontSize: 18),
@@ -63,4 +53,3 @@ class CatigoryW extends StatelessWidget {
     );
   }
 }
-

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 class MyButtons extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback onDoubleTap;
   final String text;
   const MyButtons({
     super.key,
-    required this.onTap,
+    required this.onDoubleTap,
     required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onDoubleTap,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
