@@ -206,8 +206,8 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const CircleAvatar(
-          backgroundColor: bgColor,
-          child: Icon(Icons.person, color: Colors.white),
+          backgroundColor: bgColor1,
+          child: Icon(Icons.person, color: Colors.black),
         ),
         const SizedBox(width: 12),
         Expanded(

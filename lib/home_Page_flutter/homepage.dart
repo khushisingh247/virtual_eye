@@ -25,9 +25,6 @@ class MapUtils {
 }
 
 
-
-
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -109,10 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // Handle voice commands centrally
   void _handleVoiceCommand(String command) {
     if (command.contains('open services')) {
-      setState(() {
-        myIndex = 1;  // Navigate to "Services"
-      });
-    } else if (command.contains('open home')) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>ServicesBottom(),
+        ),
+      );
+    }
+    if (command.contains('open home')) {
       setState(() {
         myIndex = 0;  // Navigate to "Home"
       });
@@ -224,10 +225,10 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.home),
               label: 'Home',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.call),
-              label: 'Services',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.call),
+            //   label: 'Services',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.queue_music),
               label: 'Music',

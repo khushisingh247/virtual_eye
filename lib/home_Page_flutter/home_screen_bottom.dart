@@ -164,7 +164,19 @@ class _HomeScreenBottomState extends State<HomeScreenBottom> {
                                       );
                                     },
                                   ),
-
+                                  CatigoryW(
+                                    image: 'images/call_1.png',
+                                    text: 'Services',
+                                    color: Colors.white,
+                                    onDoubleTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>ServicesBottom(),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ],
                               ),
                             ],
