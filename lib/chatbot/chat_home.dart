@@ -16,41 +16,34 @@ class ChatHome extends ConsumerStatefulWidget {
 class _ChatHomeState extends ConsumerState<ChatHome> {
   var text = "I am a smart assistant chatbot";
   SpeechToText speechToText = SpeechToText();
-  FlutterTts flutterTts = FlutterTts(); // Text-to-Speech instance
+  FlutterTts flutterTts = FlutterTts();
   var isListening = false;
 
   final ScrollController scrollController = ScrollController();
-  List<String> spokenMessages = []; // Track messages that have been spoken
+  List<String> spokenMessages = [];
 
   @override
   void initState() {
     super.initState();
-    _playOpeningInstruction(); // Play the instruction when app opens
+    _playOpeningInstruction();
+  }
 
-    // Initialize TTS
-    flutterTts.setCompletionHandler(() {
-      // Handle actions after TTS completes if needed
-    });
+  // Function to remove unwanted characters (e.g., asterisks) from text
+  String cleanText(String text) {
+    return text.replaceAll('*', ''); // Removes all asterisks (*)
   }
 
   // Method to play the opening instruction in both English and Hindi
   Future<void> _playOpeningInstruction() async {
-    // Play the English instruction
     await flutterTts.setLanguage("en-IN");
     await Future.delayed(Duration(milliseconds: 250));
     await flutterTts.speak("Hold the screen to ask a question.");
-
-    // Wait for the English instruction to finish before speaking in Hindi
     await flutterTts.awaitSpeakCompletion(true);
-
-    // Play the Hindi instruction
     await flutterTts.setLanguage("hi-IN");
     await flutterTts.speak("Screen ko dabaen rakhe aur prashn karen.");
   }
 
-
-
-  // Method to provide auditory feedback when recording starts
+  // Provide auditory feedback when recording starts
   Future<void> _playStartRecordingSound() async {
     await flutterTts.setLanguage("en-IN");
     await flutterTts.speak("Listening...");
@@ -59,7 +52,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
     await flutterTts.speak("Bole");
   }
 
-  // Method to provide auditory feedback when recording stops
+  // Provide auditory feedback when recording stops
   Future<void> _playStopRecordingSound() async {
     await flutterTts.setLanguage("en-IN");
     await flutterTts.speak("Recording stopped.");
@@ -71,26 +64,32 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
         duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
   }
 
-  // Method to convert text to speech
+  // Convert text to speech
   Future<void> _speak(String message, ChatMessageType type) async {
-    await _setTtsLanguage(type); // Set language before speaking
-    await flutterTts.speak(message);
+    String cleanedMessage = cleanText(message); // Clean message before speaking
+    await _setTtsLanguage(type);
+    await flutterTts.speak(cleanedMessage);
   }
 
-  // Method to stop any ongoing speech (TTS)
+  // Stop any ongoing speech (TTS)
   Future<void> _stopSpeech() async {
-    await flutterTts.stop(); // This stops any speech that's currently happening
+    await flutterTts.stop();
   }
 
-  // Method to set the TTS language based on the chat type
+  // Set the TTS language based on the chat type
   Future<void> _setTtsLanguage(ChatMessageType type) async {
     if (type == ChatMessageType.bot) {
-      // Assuming bot messages are in Hindi
       await flutterTts.setLanguage("hi-IN");
     } else {
-      // Assuming other messages are in English
       await flutterTts.setLanguage("en-IN");
     }
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    speechToText.stop();
+    super.dispose();
   }
 
   @override
@@ -114,10 +113,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
       ),
       body: GestureDetector(
         onTapDown: (details) async {
-          // Stop TTS before starting to listen
-          await _stopSpeech();
-
-          // Play sound when recording starts
+          await _stopSpeech(); // Stop any ongoing speech before listening
           await _playStartRecordingSound();
 
           if (!isListening) {
@@ -141,11 +137,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
             isListening = false;
           });
           speechToText.stop();
-
-          // Play sound when recording stops
           await _playStopRecordingSound();
-
-          // Send the new message recognized by speech
           ref.read(chatProvider.notifier).sendMessage(text);
           scrollMethod();
         },
@@ -175,15 +167,15 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
                     itemCount: chatMessages.length,
                     itemBuilder: (BuildContext context, int index) {
                       var chat = chatMessages[index];
+                      String cleanedMessage = cleanText(chat.text); // Clean the message
 
-                      // Speak the chatbot response only if it's a bot message and hasn't been spoken yet
+                      // Speak only bot messages that haven't been spoken yet
                       if (chat.type == ChatMessageType.bot && !spokenMessages.contains(chat.text)) {
-                        // Call a method to speak the message asynchronously
-                        _speak(chat.text, chat.type); // Call text-to-speech for the response
-                        spokenMessages.add(chat.text);  // Mark the message as spoken
+                        _speak(cleanedMessage, chat.type); // Speak cleaned message
+                        spokenMessages.add(chat.text); // Mark original message as spoken
                       }
 
-                      return chatBubble(chatText: chat.text, type: chat.type);
+                      return chatBubble(chatText: cleanedMessage, type: chat.type);
                     },
                   ),
                 ),
@@ -223,7 +215,7 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
               ),
             ),
             child: Text(
-              "$chatText",
+              chatText, // Use cleaned text in UI
               style: const TextStyle(
                 color: chatBgColor,
                 fontSize: 15,
@@ -236,4 +228,6 @@ class _ChatHomeState extends ConsumerState<ChatHome> {
     );
   }
 }
+
+
 

@@ -48,15 +48,30 @@ class _HomeScreenBottomState extends State<HomeScreenBottom> {
 
   Future<void> _playWelcomeMessage() async {
     try {
+      await _flutterTts.stop(); // Stop any ongoing speech before starting
       await _flutterTts.setLanguage("en-IN");
-      await _flutterTts.speak("Welcome to our app. Tap anywhere to give a command. You have to say 'open' before the option of object detection, chatbot, map, services, music, logout. example open chatbot.");
+      await _flutterTts.speak("Welcome to our app. Tap anywhere to give a command. You have to say 'open' before the option of object detection, chatbot, map, services, music, logout. Example: open chatbot.");
       await _flutterTts.awaitSpeakCompletion(true);
+
       await _flutterTts.setLanguage("hi-IN");
-      await _flutterTts.speak(" Hamare app mein aapka swagat hai.Command dene ke liye kahin bhi click karein. Aapko object detection, chatbot, map, services, music, aur logout jaise vikalpo ke istemal karne ke liye pehle 'open' bole . jaise ki ' open chatbot'");
+      await _flutterTts.speak("Hamare app mein aapka swagat hai. Command dene ke liye kahin bhi click karein. Aapko object detection, chatbot, map, services, music, aur logout jaise vikalpo ke istemal karne ke liye pehle 'open' bolein. Jaise ki 'open chatbot'.");
+      await _flutterTts.awaitSpeakCompletion(true);
     } catch (e) {
       print("Error playing welcome message: $e");
     }
   }
+
+  // Future<void> _playWelcomeMessage() async {
+  //   try {
+  //     await _flutterTts.setLanguage("en-IN");
+  //     await _flutterTts.speak("Welcome to our app. Tap anywhere to give a command. You have to say 'open' before the option of object detection, chatbot, map, services, music, logout. example open chatbot.");
+  //     await _flutterTts.awaitSpeakCompletion(true);
+  //     await _flutterTts.setLanguage("hi-IN");
+  //     await _flutterTts.speak(" Hamare app mein aapka swagat hai.Command dene ke liye kahin bhi click karein. Aapko object detection, chatbot, map, services, music, aur logout jaise vikalpo ke istemal karne ke liye pehle 'open' bole . jaise ki ' open chatbot'");
+  //   } catch (e) {
+  //     print("Error playing welcome message: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -14,6 +14,7 @@ class _ServicesBottomState extends State<ServicesBottom> {
     {'name': 'Police', 'number': '112'},
     {'name': 'Fire Department', 'number': '+911234567890'},
     {'name': 'Ambulance', 'number': '+919876543210'},
+    {'name': 'NGO', 'number': '+919327547207'},
   ];
 
   final FlutterTts _flutterTts = FlutterTts(); // FlutterTts instance

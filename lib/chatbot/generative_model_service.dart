@@ -11,7 +11,7 @@ class GenerativeChatService {
 
   GenerativeChatService() {
     final apiKey = 'AIzaSyBEPRlSbHSxYfxh_lbogsi2__Mw67cGsZU'; // Add your API key here
-    model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+    model = GenerativeModel(model: 'gemini-1.5-pro', apiKey: apiKey);
     chat = model.startChat();
   }
 
@@ -21,3 +21,4 @@ class GenerativeChatService {
     return response.text!;
   }
 }
+
